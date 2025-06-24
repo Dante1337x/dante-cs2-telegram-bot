@@ -110,6 +110,13 @@ const locales = {
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
+bot.use(async (ctx, next) => {
+    if (ctx.message && ctx.message.text === '/ping') {
+        return ctx.reply('pong');
+    }
+    await next();
+});
+
 // Translation helper function
 const t = (ctx, key) => {
     const lang = userLanguage[ctx.chat?.id] || 'en';
